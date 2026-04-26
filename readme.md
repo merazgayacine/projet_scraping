@@ -349,7 +349,7 @@ texte (str)
 
 ---
 
-## Tests et bogues identifiés
+## Tests et BUGUES identifiés
 
 ### Tests effectués
 
@@ -365,26 +365,26 @@ texte (str)
 | Entraînement 3 epochs Colab | OK |
 | Prédiction nouveaux textes | OK |
 
-### Bogues identifiés et corrigés
+### BUGUES identifiés et corrigés
 
-**Bogue 1 — Duplication du texte** (CORRIGÉ)
+**BUG 1 — Duplication du texte** (CORRIGÉ)
 
 - **Description** : Le texte extrait contenait les menus de navigation, les listes de vidéos recommandées et les blocs newsletter, identiques sur chaque article. Le contenu utile représentait moins de 20% du texte total.
 - **Cause** : XPath `//p//text()` extrait tous les paragraphes de la page sans distinction.
 - **Correction** : Remplacement par `//article//p//text()` qui cible uniquement la balise `<article>` contenant le corps éditorial.
 - **Impact sur l'analyse** : sans cette correction, le modèle de classification aurait appris sur du bruit (contenu identique entre articles), faussant complètement les résultats.
 
-**Bogue 2 — Articles trop courts** (CORRIGÉ)
+**BUG 2 — Articles trop courts** (CORRIGÉ)
 
 - **Description** : Certains liens mènent à des pages sans texte d'article (pages de direct, pages de profil), générant des entrées vides dans le CSV.
 - **Correction** : Filtre `len(texte_final) < 300` — les articles trop courts sont ignorés.
 
-**Bogue 3 — Quota Google Drive Colab** (CORRIGÉ)
+**BUG 3 — Quota Google Drive Colab** (CORRIGÉ)
 
 - **Description** : L'entraînement sur Colab sauvegardait les checkpoints sur Google Drive, dépassant le quota.
 - **Correction** : `output_dir="/tmp/resultats"` et `save_strategy="no"` dans TrainingArguments.
 
-**Bogue 4 — Module non trouvé (venv VSCode)** (CORRIGÉ)
+**BUG 4 — Module non trouvé (venv VSCode)** (CORRIGÉ)
 
 - **Description** : VSCode n'utilisait pas l'environnement virtuel activé dans le terminal.
 - **Correction** : Toujours lancer le script depuis le terminal avec `source venv/bin/activate` avant `python3 web_scraping.py`.
